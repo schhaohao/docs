@@ -6,6 +6,7 @@ export default withMermaid(
     title: 'Claude Code Java',
     description: '用 Java 从零实现 Claude Code — 面向初学者的深度学习文档',
     lang: 'zh-CN',
+    base: '/docs/',
 
     themeConfig: {
       nav: [
@@ -101,11 +102,10 @@ export default withMermaid(
       }
     },
 
-    lastUpdated: true
-  }),
-  {
+    lastUpdated: true,
+
     mermaid: {
       theme: 'default',
     }
-  }
+  })
 )
