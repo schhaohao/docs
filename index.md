@@ -12,6 +12,9 @@ hero:
     - theme: alt
       text: 快速开始
       link: /guide/quick-start
+    - theme: alt
+      text: GitHub
+      link: https://github.com/schhaohao/OwnCode
 
 features:
   - icon: "\U0001F504"
@@ -33,6 +36,8 @@ features:
     title: 终端交互
     details: JLine3 驱动的 REPL 交互界面，ANSI 颜色渲染，命令历史持久化
 ---
+
+<GitHubStar />
 
 ## 这个项目能教会你什么？
 

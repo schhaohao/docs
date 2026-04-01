@@ -9,6 +9,10 @@ export default withMermaid(
     base: '/docs/',
 
     themeConfig: {
+      socialLinks: [
+        { icon: 'github', link: 'https://github.com/schhaohao/OwnCode' }
+      ],
+
       nav: [
         { text: '入门指南', link: '/guide/introduction' },
         { text: '架构设计', link: '/architecture/overview' },
