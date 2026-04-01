@@ -189,6 +189,39 @@ public ToolResult execute(Map<String, Object> input) {
 | [GlobTool](/tools/glob) | `Glob` | 文件名模式搜索 | 自动放行 |
 | [GrepTool](/tools/grep) | `Grep` | 文件内容正则搜索 | 自动放行 |
 
+## MCP 外部工具
+
+除了 6 个内置工具，系统还支持通过 [MCP（Model Context Protocol）](/architecture/mcp) 接入外部工具服务器。
+
+### 与内置工具的区别
+
+| | 内置工具 | MCP 工具 |
+|--|---------|---------|
+| 实现方式 | Java 代码实现 `Tool` 接口 | MCP Server 子进程（任意语言） |
+| 注册方式 | `ToolRegistry.registerBuiltinTools()` | `McpManager.initializeAndRegister()` |
+| 命名格式 | `Bash`、`Read` | `mcp__<server>__<tool>` |
+| 权限 | 按工具类型区分（只读放行/写入审批） | **一律需要审批** |
+| 通信 | 直接方法调用 | JSON-RPC over stdin/stdout |
+
+### 透明性
+
+MCP 工具通过 `McpToolAdapter` 适配为 `Tool` 接口后，在 `ToolRegistry` 和 `AgentLoop` 中与内置工具 **完全等价**。LLM 看到的工具定义格式相同，AgentLoop 调用方式相同，权限检查流程相同。
+
+```
+ToolRegistry
+├── Bash          (BashTool — 内置)
+├── Read          (ReadFileTool — 内置)
+├── Edit          (EditFileTool — 内置)
+├── Write         (WriteFileTool — 内置)
+├── Glob          (GlobTool — 内置)
+├── Grep          (GrepTool — 内置)
+├── mcp__context7__resolve-library-id   (McpToolAdapter — MCP)
+├── mcp__context7__query-docs           (McpToolAdapter — MCP)
+└── mcp__filesystem__read_file          (McpToolAdapter — MCP)
+```
+
+详细了解 MCP 工具的集成机制，请参阅 [MCP 集成架构](/architecture/mcp)。
+
 ## 如何添加新工具？
 
 添加新工具只需 3 步：

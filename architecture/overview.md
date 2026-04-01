@@ -25,14 +25,22 @@ graph TB
     subgraph Infra["基础设施层"]
         direction LR
         API["ClaudeApiClient<br/>+ StreamAssembler"]
-        Tools["ToolRegistry<br/>+ 6个Tool实现"]
+        Tools["ToolRegistry<br/>+ 6个内置Tool"]
         Perm["PermissionManager<br/>+ PermissionRule"]
+    end
+
+    subgraph MCP["MCP 扩展层 (mcp/)"]
+        direction LR
+        MM["McpManager<br/>子系统编排"]
+        MTA["McpToolAdapter<br/>工具适配器"]
+        MC["McpClient<br/>+ StdioTransport"]
     end
 
     subgraph External["外部系统"]
         Claude["Claude API"]
         FS["文件系统"]
         Shell["Shell / 进程"]
+        McpServer["MCP Server 子进程"]
     end
 
     Repl --> AL
@@ -44,6 +52,10 @@ graph TB
     API --> Claude
     Tools --> FS
     Tools --> Shell
+    MM --> MTA
+    MTA --> Tools
+    MC --> McpServer
+    MM --> MC
 ```
 
 ## 核心数据流
@@ -163,7 +175,7 @@ apiClient.sendMessageStream(request, outputCallback);
   → ASK   → 弹出终端提示，等用户确认
 ```
 
-只读工具（Read、Glob、Grep）自动放行，写入工具（Bash、Edit、Write）需要用户审批。
+只读工具（Read、Glob、Grep）自动放行，写入工具（Bash、Edit、Write）需要用户审批。MCP 外部工具一律需要用户审批。
 
 ### 4. 错误不扩散
 
@@ -187,3 +199,5 @@ public ToolResult execute(String toolName, Map<String, Object> input) {
 ## 下一步
 
 接下来让我们深入 [Agent Loop 核心循环](/architecture/agent-loop) —— 整个系统最核心的设计。
+
+了解 MCP 扩展层的设计，请参阅 [MCP 集成架构](/architecture/mcp)。
