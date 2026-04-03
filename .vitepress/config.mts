@@ -18,6 +18,7 @@ export default withMermaid(
         { text: '架构设计', link: '/architecture/overview' },
         { text: '核心代码', link: '/core-code/entry-point' },
         { text: '工具系统', link: '/tools/overview' },
+        { text: 'Skill 系统', link: '/architecture/skill-system' },
         { text: 'MCP 集成', link: '/architecture/mcp' },
       ],
 
@@ -40,6 +41,7 @@ export default withMermaid(
               { text: 'Agent Loop 核心循环', link: '/architecture/agent-loop' },
               { text: 'API 通信层', link: '/architecture/api-layer' },
               { text: '权限管理', link: '/architecture/permission' },
+              { text: 'Skill 系统架构', link: '/architecture/skill-system' },
               { text: 'MCP 集成架构', link: '/architecture/mcp' },
             ]
           }
@@ -54,6 +56,8 @@ export default withMermaid(
               { text: 'SSE 流式组装', link: '/core-code/stream-assembler' },
               { text: '对话历史与上下文', link: '/core-code/conversation' },
               { text: '终端交互 REPL', link: '/core-code/repl' },
+              { text: 'CommandRegistry 命令注册中心', link: '/core-code/command-registry' },
+              { text: 'SkillLoader 磁盘加载器', link: '/core-code/skill-loader' },
               { text: 'MCP Manager 与适配器', link: '/core-code/mcp-manager' },
               { text: 'MCP Client 与传输层', link: '/core-code/mcp-client' },
               { text: 'MCP 配置加载', link: '/core-code/mcp-config' },
@@ -71,6 +75,7 @@ export default withMermaid(
               { text: 'WriteFileTool', link: '/tools/write-file' },
               { text: 'GlobTool', link: '/tools/glob' },
               { text: 'GrepTool', link: '/tools/grep' },
+              { text: 'SkillTool', link: '/tools/skill-tool' },
             ]
           }
         ],
